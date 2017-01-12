@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html ng-app="codingChallenge">
+    <head>
+        <title>Juniper Networks: Contrail -- Coding Challenge</title>
+        <!-- feel free to remove below link to demo.css, if you don't use it -->
+        <link rel="stylesheet" type="text/css" href="css/graph.css" />
+
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+        <script src="js/vendor/jquery.mockjax.min.js"></script>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="js/controller/indexController.js"></script>
+        <script src="https://d3js.org/d3.v3.min.js"></script>
+
+        <script src="js/service/httpService.js"></script>
+        <!--
+            Add your allowed additional libraries/frameworks here
+            you can use CDN or local files (put them under the "vendor" folder).
+        -->
+    </head>
+    <body  ng-controller="indexController" ng-init="initFunction()">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Juniper Coding Challenge</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <div class="navbar-right">
+                   <a class="navbar-brand">PavanKumar Pasala</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="jumbotron">
+                    <div class="container">
+                        <h3> Line Graph</h3>
+                        <div class="col-md-3"> Select Y axis </div>
+                        <div class="col-md-4">
+
+                            <select ng-model="option" class="form-control">
+                            <option value="1">CPU Usage</option>
+                            <option value="2">Memory Available</option>
+                            <option value="3">Memory Usage</option>
+                            <option value="4">Network Throughput - In</option>
+                            <option value="5">Network Throughput - Out</option>
+                        </select></div>
+                        <div class="col-md-4"><button ng-click="yAxis(option)" class="btn btn-md btn-primary">Select</button></div>
+
+                        <line></line>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="jumbotron">
+                    <div class="container">
+                        <h3> Bar Graph</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="container">
+                <div class="col-md-4"></div>
+                <div class="col-md-8"> <h3> Simple user registration form to submit data to server.</h3></div>
+            </div>
+
+            <form class="form-horizontal" ng-submit="sendData(data);">
+
+                <div class="form-group">
+                    <label for="firstName" class="col-sm-4 control-label">First Name</label>
+                    <div class="col-sm-2">
+                        <input type="text"  class="form-control" id="firstName" ng-model="data.firstName" placeholder="First Name" required />
+                    </div>
+                    <label for="lastName" class="col-sm-2 control-label">Last Name</label>
+                    <div class="col-sm-2">
+                        <input type="text"  required class="form-control" id="lastName" ng-model="data.lastName" placeholder="Last Name">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="emailId" class="col-sm-4 control-label">Email ID</label>
+                    <div class="col-sm-6">
+                        <input type="email"  ng-model="data.emailId" required class="form-control" id="emailId" placeholder="Enter your Email ID" >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="col-sm-4 control-label">Password</label>
+                    <div class="col-sm-2">
+                        <input type="password"  class="form-control" id="password" ng-model="data.password" placeholder="Password" required />
+                    </div>
+                    <label for="rpassword" class="col-sm-2 control-label">Re enter Password</label>
+                    <div class="col-sm-2">
+                        <input type="password"  required class="form-control" id="rpassword" ng-model="data.rpassword"  placeholder="Re enter Password">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="sex" class="col-sm-4 control-label">Gender</label>
+                    <div class="col-sm-2">
+                        <select  ng-model ="data.sex" class="form-control" id="sex">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+
+                        </select>
+                    </div>
+
+                    <label for="DOB" class="col-sm-2 control-label">DOB</label>
+                    <div class="col-sm-2">
+                        <input type="date"  required class="form-control" id="DOB" ng-model="data.dob">
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-8">
+                        <button type="submit" class="btn btn-md  btn-success">Submit</button>
+
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+        <ul id="mockAPIResponse">
+            <!-- For demo only, feel free to remove this div during your development -->
+        </ul>
+        <script src="js/controller/graph.js"></script>
+        <script src="js/mockAPIs.js"></script>
+        <!--
+            The below script is for demo purpose only,
+            remove it before starting development.
+        -->
+        <!--<script src="js/test.js"></script>-->
+        <!--<script src="js/demo/demo_driver.js"></script>-->
+    </body>
+</html>
