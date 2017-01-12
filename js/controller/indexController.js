@@ -20,8 +20,8 @@ angular.module('codingChallenge', [])
                 bottom: 20,
                 left: 60
             },
-            width = 570 - margin.left - margin.right,
-            height = 350 - margin.top - margin.bottom - 10;
+            width = 1000 - margin.left - margin.right,
+            height = 400 - margin.top - margin.bottom - 10;
 
         var x = d3.time.scale()
             .domain([0, now - duration])
@@ -117,39 +117,39 @@ angular.module('codingChallenge', [])
             }else{
                 arrValue = newVal
             }
-                // update the domains
-                now = new Date();
-                x.domain([now - (n - 2) * duration, now - duration]);
-                y.domain([0, d3.max(data) + 10]);
+            // update the domains
+            now = new Date();
+            x.domain([now - (n - 2) * duration, now - duration]);
+            y.domain([0, d3.max(data) + 10]);
 
 
-                // push a new data point onto the back
+            // push a new data point onto the back
 
-                data.push(arrValue);
+            data.push(arrValue);
 
-                // redraw the line, and slide it to the left
-                path.attr("d", line)
-                    .attr("transform", null);
+            // redraw the line, and slide it to the left
+            path.attr("d", line)
+                .attr("transform", null);
 
 
-                // Add the text label for the Y axis
-                svg.append("text")
-                    .attr("transform", "rotate(-90)")
-                    .attr("y", 0 - margin.left - 5)
-                    .attr("x",0 - (height / 2))
-                    .attr("dy", "1em")
-                    .style("text-anchor", "middle")
-                    .text(labelText);
-                // slide the x-axis left, rescale the y-axis
-                axis.call(x.axis);
-                yAx.call(y.axis);
+            // Add the text label for the Y axis
+            svg.append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 0 - margin.left - 5)
+                .attr("x",0 - (height / 2))
+                .attr("dy", "1em")
+                .style("text-anchor", "middle")
+                .text(labelText);
+            // slide the x-axis left, rescale the y-axis
+            axis.call(x.axis);
+            yAx.call(y.axis);
 
-                // slide the line left
-                path.transition()
-                    .attr("transform", "translate(" + x(now - (n - 1) * duration) + ")");
+            // slide the line left
+            path.transition()
+                .attr("transform", "translate(" + x(now - (n - 1) * duration) + ")");
 
-                // pop the old data point off the front
-                data.shift();
+            // pop the old data point off the front
+            data.shift();
 
         }
 
@@ -174,13 +174,13 @@ angular.module('codingChallenge', [])
 
                 } ,
                 function(reason){
-                //  console.log(reason);
+                    //  console.log(reason);
 
                     tick(-1);
                 });
 
 
-              }
+        }
 
         $scope.initFunction = function(){
             $interval(function(){
@@ -198,7 +198,7 @@ angular.module('codingChallenge', [])
                     scope.data = {};
                 } ,
                 function(reason){
-                   console.log(reason);
+                    console.log(reason);
                 });
 
 
